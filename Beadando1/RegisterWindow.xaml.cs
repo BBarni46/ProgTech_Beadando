@@ -39,6 +39,7 @@ namespace Beadando1
                 StatusTextBlock.Text = "Sikeres bejelentkezés!";
                 this.Close();
                 //ide cuccok majd ha lehet adatb
+                //hehe
             }
             else
             {

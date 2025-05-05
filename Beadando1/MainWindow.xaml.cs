@@ -59,7 +59,11 @@ namespace Beadando1
                 ToggleMuteButton.Content = "🔇";
             }
         }
-
+        private void AuthButton_Click(object sender, RoutedEventArgs e)
+        {
+            RegisterWindow authWindow = new RegisterWindow();
+            authWindow.ShowDialog(); 
+        }
         //GITHUB PRÓBA , siker
         //cicah yeayea aha
     }

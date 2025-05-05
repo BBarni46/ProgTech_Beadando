@@ -17,6 +17,10 @@
 		<Resource Include="Image\bg.jpeg" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Sound\" />
+	</ItemGroup>
+
 	
 		
 	

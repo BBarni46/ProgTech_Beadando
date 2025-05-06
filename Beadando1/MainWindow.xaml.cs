@@ -21,7 +21,7 @@ namespace Beadando1
         public MainWindow()
         {
             InitializeComponent();
-            string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)!.Parent!.Parent!.FullName;
+            string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
             string fullPath = System.IO.Path.Combine(projectRoot, "Sound", "menu.mp3");
 
             MusicState.mediaPlayer.Open(new Uri(fullPath, UriKind.Absolute));

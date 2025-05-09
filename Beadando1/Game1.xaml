@@ -5,8 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Beadando1"
         mc:Ignorable="d"
-        Title="Game1" Height="450" Width="800">
-    <Grid>
-		
+        Title="Black Jack" Height="450" Width="800" Background="#FF006400">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Black Jack" FontSize="30" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10" VerticalAlignment="Top">
+            <TextBlock Text="Játékos lapjai:" FontWeight="Bold" Foreground="White"/>
+            <TextBlock x:Name="PlayerCardsText" Foreground="White"/>
+            <TextBlock x:Name="PlayerScoreText" Foreground="White" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Osztó lapjai:" FontWeight="Bold" Foreground="White"/>
+            <TextBlock x:Name="DealerCardsText" Foreground="White"/>
+            <TextBlock x:Name="DealerScoreText" Foreground="White"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button x:Name="HitButton" Content="Húzok" Click="HitButton_Click" Width="80" Margin="5"/>
+            <Button x:Name="StandButton" Content="Megállok" Click="StandButton_Click" Width="80" Margin="5"/>
+            <Button x:Name="NewGameButton" Content="Új játék" Click="NewGameButton_Click" Width="80" Margin="5"/>
+        </StackPanel>
     </Grid>
 </Window>
+

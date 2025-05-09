@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,9 +63,20 @@ namespace Beadando1
        
         private void G1_Click(object sender, RoutedEventArgs e)
         {
+            MusicState.mediaPlayer.Stop();
+
+            // Új zene betöltése
+            string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
+            string newFullPath = System.IO.Path.Combine(projectRoot, "Sound", "game.mp3");
+
+            MusicState.mediaPlayer.Open(new Uri(newFullPath, UriKind.Absolute));
+            MusicState.mediaPlayer.MediaEnded += (s, e2) => MusicState.mediaPlayer.Position = TimeSpan.Zero;
+            MusicState.mediaPlayer.Play();
+
             Game1 win1 = new Game1(this);
             win1.Show();
             this.Close();
+
         }
 
         private void G2_Click(object sender, RoutedEventArgs e)

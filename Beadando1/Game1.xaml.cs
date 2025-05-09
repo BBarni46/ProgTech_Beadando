@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,10 +25,9 @@ namespace Beadando1
         public Game1(GameSelect gameSelect)
         {
             InitializeComponent();
+            _gameSelect = gameSelect;
 
-            _gameSelect = gameSelect;  // A GameSelect példány tárolása
-
-            // Pozíció öröklése a GameSelect ablakról
+            // Ezután már elérhető a pozíciója
             this.Left = _gameSelect.Left;
             this.Top = _gameSelect.Top;
             this.WindowStartupLocation = WindowStartupLocation.Manual;

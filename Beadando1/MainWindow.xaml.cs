@@ -65,7 +65,7 @@ namespace Beadando1
             authWindow.ShowDialog(); 
         }
         //GITHUB PRÓBA , siker
-        //cicah yeayea ah
-        //lmao
+        //cicah yeayea aha
+        //uj sor
     }
 }

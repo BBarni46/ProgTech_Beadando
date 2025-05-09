@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using Microsoft.Data.Sqlite;
 namespace Beadando1
 {
     /// <summary>
@@ -21,11 +21,10 @@ namespace Beadando1
     {
         private MainWindow _mainWindow;
 
-
-
         public RegisterWindow()
         {
             InitializeComponent();
+            DataBase.CreateDataBase();
         }
 
 
@@ -34,12 +33,10 @@ namespace Beadando1
             string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
 
-            if (username == "Bajnok" && password == "cicah")
+            if (DataBase.LoginUser(username, password))
             {
                 StatusTextBlock.Text = "Sikeres bejelentkezés!";
                 this.Close();
-                //ide cuccok majd ha lehet adatb
-                //hehe
             }
             else
             {
@@ -52,7 +49,22 @@ namespace Beadando1
             string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
 
-            StatusTextBlock.Text = "Regisztráció sikeres.";
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+                StatusTextBlock.Text = "Kérlek töltsd ki az összes mezőt.";
+                return;
+            }
+
+            if (DataBase.RegisterUser(username, password, out string error))
+                StatusTextBlock.Text = "Regisztráció sikeres.";
+            else
+                StatusTextBlock.Text = error;
+        }
+
+        private void ShowUsers_Click(object sender, RoutedEventArgs e)
+        {
+            var userListWindow = new UserListing();
+            userListWindow.ShowDialog(); // vagy .Show() ha nem modális
         }
     }
 }

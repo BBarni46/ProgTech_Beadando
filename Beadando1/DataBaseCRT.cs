@@ -9,7 +9,7 @@ using System.IO;
 namespace Beadando1
 {
     public static class DataBase
-    {
+    { //xd
         private const string DbFile = "users.db";
         private static readonly string ConnectionString = $"Data Source={DbFile}";
 

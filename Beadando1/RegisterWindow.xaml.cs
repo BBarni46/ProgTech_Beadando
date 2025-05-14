@@ -20,13 +20,13 @@ namespace Beadando1
     /// </summary>
     public partial class RegisterWindow : Window
     {
-        private MainWindow _mainWindow;
+        private MainWindow mainWindow;
 
         
-        public RegisterWindow()
+        public RegisterWindow(MainWindow mainWindow)
         {
             InitializeComponent();
-
+            this.mainWindow = mainWindow;
         }
         private void Login_Click(object sender, RoutedEventArgs e)
         {
@@ -36,6 +36,7 @@ namespace Beadando1
             if (DataBase.LoginUser(username, password))
             {
                 StatusTextBlock.Text = "Sikeres bejelentkezés!";
+                mainWindow.SetLoggedInUser(username);
                 this.Close();
             }
             else
@@ -64,7 +65,7 @@ namespace Beadando1
         private void ShowUsers_Click(object sender, RoutedEventArgs e)
         {
             var userListWindow = new UserListing();
-            userListWindow.ShowDialog(); // vagy .Show() ha nem modális
+            userListWindow.ShowDialog(); 
         }
     
     }

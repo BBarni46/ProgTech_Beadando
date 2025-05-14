@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Data.Sqlite;
+using MySql.Data.MySqlClient;
 namespace Beadando1
 {
     /// <summary>
@@ -21,13 +22,12 @@ namespace Beadando1
     {
         private MainWindow _mainWindow;
 
+        
         public RegisterWindow()
         {
             InitializeComponent();
-            DataBase.CreateDataBase();
+
         }
-
-
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameTextBox.Text;
@@ -66,6 +66,7 @@ namespace Beadando1
             var userListWindow = new UserListing();
             userListWindow.ShowDialog(); // vagy .Show() ha nem modális
         }
+    
     }
 }
 

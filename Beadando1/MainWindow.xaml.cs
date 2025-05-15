@@ -17,9 +17,10 @@ namespace Beadando1
     /// </summary>
     public partial class MainWindow : Window
     {
-      
+        private string? loggedInUser = null;
         public MainWindow()
         {
+
             InitializeComponent();
             string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
             string fullPath = System.IO.Path.Combine(projectRoot, "Sound", "menu.mp3");
@@ -31,7 +32,7 @@ namespace Beadando1
 
         private void Play_Click(object sender, RoutedEventArgs e)
         {
-            // Az új ablak megnyitása
+            
             GameSelect win = new GameSelect(this);
             win.Left = this.Left;
             win.Top = this.Top;
@@ -39,7 +40,7 @@ namespace Beadando1
             win.Show();
             this.Close();
         }
-
+       
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -61,8 +62,21 @@ namespace Beadando1
         }
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-            RegisterWindow authWindow = new RegisterWindow();
-            authWindow.ShowDialog(); 
+            if (loggedInUser == null)
+            {
+                var registerWindow = new RegisterWindow(this);
+                registerWindow.ShowDialog();
+            }
+            else
+            {
+                var profileWindow = new ProfileWindow(loggedInUser);
+                profileWindow.ShowDialog();
+            }
+        }
+        public void SetLoggedInUser(string username)
+        {
+            loggedInUser = username;
+            RegisterButton.Content = username; 
         }
         //GITHUB PRÓBA , siker
         //cicah yeayea aha

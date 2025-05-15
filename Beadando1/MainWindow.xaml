@@ -37,6 +37,7 @@
          Width="100" Height="25"
          HorizontalAlignment="Left" VerticalAlignment="Top"
          Margin="10"
+         x:Name="RegisterButton"
          Click="AuthButton_Click"/>
         <Button x:Name="ToggleMuteButton" Content="🔊"
                 HorizontalAlignment="Right" VerticalAlignment="Top"

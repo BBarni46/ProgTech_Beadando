@@ -32,7 +32,16 @@ namespace Beadando1
 
         private void Play_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (loggedInUser == null)
+            {
+                var registerWindow = new RegisterWindow(this);
+                registerWindow.ShowDialog();
+
+                if (loggedInUser == null)
+                {
+                    return;
+                }
+            }
             GameSelect win = new GameSelect(this);
             win.Left = this.Left;
             win.Top = this.Top;

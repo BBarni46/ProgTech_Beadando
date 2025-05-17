@@ -40,7 +40,7 @@ namespace Beadando1
                 if (loggedInUser == null)
                 {
                     return;
-                }
+                }   
             }
             GameSelect win = new GameSelect(this);
             win.Left = this.Left;

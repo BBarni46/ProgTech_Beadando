@@ -20,7 +20,7 @@ namespace Beadando1
     /// </summary>
     public partial class Game1 : Window
     {
-        private GameSelect _gameSelect;  
+        private GameSelect _gameSelect;
 
         public Game1(GameSelect gameSelect)
         {
@@ -28,7 +28,7 @@ namespace Beadando1
             StartNewGame();
             _gameSelect = gameSelect;
 
-            
+
             this.Left = _gameSelect.Left;
             this.Top = _gameSelect.Top;
             this.WindowStartupLocation = WindowStartupLocation.Manual;
@@ -65,7 +65,7 @@ namespace Beadando1
 
         private string DrawCard()
         {
-            if (deck.Count == 0) deck = GenerateDeck(); 
+            if (deck.Count == 0) deck = GenerateDeck();
             var card = deck[0];
             deck.RemoveAt(0);
             return card;
@@ -78,7 +78,7 @@ namespace Beadando1
 
             foreach (var card in hand)
             {
-                string rank = card.Substring(0, card.Length - 1); 
+                string rank = card.Substring(0, card.Length - 1);
 
                 if (int.TryParse(rank, out int val))
                 {
@@ -169,4 +169,3 @@ namespace Beadando1
         }
     }
 }
-

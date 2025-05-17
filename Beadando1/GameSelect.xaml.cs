@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static Beadando1.Game1;
 
 namespace Beadando1
 {
@@ -20,14 +21,14 @@ namespace Beadando1
     /// </summary>
     public partial class GameSelect : Window
     {
-        private MainWindow _mainWindow; 
-
+        private MainWindow _mainWindow;
         public GameSelect(MainWindow mainWindow)
         {
             InitializeComponent();
 
-            _mainWindow = mainWindow; 
-           
+            _mainWindow = mainWindow;
+            RegisterButton.Content = UserSession.Username;
+
             this.Left = _mainWindow.Left;
             this.Top = _mainWindow.Top;
             this.WindowStartupLocation = WindowStartupLocation.Manual;
@@ -98,6 +99,11 @@ namespace Beadando1
             Game4 win4 = new Game4(this);
             win4.Show();
             this.Close();
+        }
+        private void AuthButton_Click(object sender, RoutedEventArgs e)
+        {
+            var profileWindow = new ProfileWindow(UserSession.Username);
+            profileWindow.ShowDialog();
         }
     }
 }

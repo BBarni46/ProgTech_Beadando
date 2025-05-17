@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="Black Jack" FontSize="30" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
-
+        <Label x:Name="BalanceLabel" FontSize="16" Margin="5"/>
         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10" VerticalAlignment="Top">
             <TextBlock Text="Játékos lapjai:" FontWeight="Bold" Foreground="White"/>
             <TextBlock x:Name="PlayerCardsText" Foreground="White"/>

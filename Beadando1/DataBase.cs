@@ -43,18 +43,32 @@ namespace Beadando1
             }
         }
 
-        public static bool LoginUser(string username, string password)
+        public static bool LoginUser(string username, string password,
+                             out int id, out decimal balance)
         {
+            id = 0;
+            balance = 0;
+
             using var connection = new MySqlConnection(ConnectionString);
             connection.Open();
 
-            var command = new MySqlCommand(
-                "SELECT COUNT(*) FROM felhasználók WHERE név = @név AND jelszó = @jelszó;", connection);
-            command.Parameters.AddWithValue("@név", username);
-            command.Parameters.AddWithValue("@jelszó", password);
+            const string sql = @"
+        SELECT id, egyenleg         -- <-- id és balance oszlopok
+        FROM   felhasználók
+        WHERE  név = @név AND jelszó = @jelszó;";
 
-            long count = (long)(long?)command.ExecuteScalar();
-            return count > 0;
+            using var cmd = new MySqlCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@név", username);
+            cmd.Parameters.AddWithValue("@jelszó", password);
+
+            using var r = cmd.ExecuteReader();
+            if (r.Read())
+            {
+                id = r.GetInt32("id");
+                balance = r.GetDecimal("egyenleg");
+                return true;
+            }
+            return false;
         }
     }
 }

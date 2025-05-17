@@ -29,8 +29,8 @@
         <Button Content="Black Jack" Width="150" Height="50" Click="G1_Click" Margin="0,0,0,10"/>
             <Button Content="Játék2" Width="150" Height="50" Click="G2_Click" Margin="0,0,0,10"/>
             <Button Content="Játék3" Width="150" Height="50" Click="G3_Click" Margin="0,0,0,10"/>
-            <Button Content="Játék4" Width="150" Height="50" Click="G4_Click"/>
-
+            <Button Content="Játék4" Width="150" Height="50" Click="G4_Click"  Margin="0,0,0,10"/>
+            <Button Content="Vissza" Click="BackToMainMenu_Click" Width="150" Height="50"/>
 
 
         </StackPanel>

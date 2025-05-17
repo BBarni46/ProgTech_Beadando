@@ -70,5 +70,29 @@ namespace Beadando1
             }
             return false;
         }
+        public static bool UpdateUserBalance(int id, decimal newBalance, out string errorMessage)
+        {
+            errorMessage = null;
+            try
+            {
+                using var connection = new MySqlConnection(ConnectionString);
+                connection.Open();
+
+                var updateCommand = new MySqlCommand(
+                    "UPDATE felhasználók SET egyenleg = @egyenleg WHERE id = @id;", connection);
+
+                updateCommand.Parameters.AddWithValue("@egyenleg", newBalance);
+                updateCommand.Parameters.AddWithValue("@id", id);
+
+                int rowsAffected = updateCommand.ExecuteNonQuery();
+
+                return rowsAffected > 0;
+            }
+            catch (MySqlException ex)
+            {
+                errorMessage = $"Hiba történt az egyenleg mentésekor: {ex.Message}";
+                return false;
+            }
+        }
     }
 }

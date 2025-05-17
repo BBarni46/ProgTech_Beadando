@@ -21,7 +21,7 @@ namespace Beadando1
     /// </summary>
     public partial class GameSelect : Window
     {
-        private MainWindow _mainWindow;
+        public MainWindow _mainWindow;
         public GameSelect(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -72,7 +72,8 @@ namespace Beadando1
 
             MusicState.mediaPlayer.Open(new Uri(newFullPath, UriKind.Absolute));
             MusicState.mediaPlayer.MediaEnded += (s, e2) => MusicState.mediaPlayer.Position = TimeSpan.Zero;
-            MusicState.mediaPlayer.Play();
+            if (!MusicState.isMuted)
+                MusicState.mediaPlayer.Play();
 
             Game1 win1 = new Game1(this);
             win1.Show();
@@ -98,6 +99,21 @@ namespace Beadando1
         {
             Game4 win4 = new Game4(this);
             win4.Show();
+            this.Close();
+        }
+        private void BackToMainMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var main = new MainWindow
+            {
+                Left = this.Left,
+                Top = this.Top,
+                WindowStartupLocation = WindowStartupLocation.Manual
+            };
+
+            if (UserSession.IsLoggedIn)
+                main.SetLoggedInUser(UserSession.Username);
+
+            main.Show();
             this.Close();
         }
         private void AuthButton_Click(object sender, RoutedEventArgs e)

@@ -2,170 +2,260 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Beadando1
 {
-    /// <summary>
-    /// Interaction logic for Game1.xaml
-    /// </summary>
     public partial class Game1 : Window
     {
-        private GameSelect _gameSelect;
+        private readonly GameSelect _gameSelect;
+        private readonly CardFactory _cardFactory = new();
+        private readonly List<Card> _playerCards = new();
+        private readonly List<Card> _dealerCards = new();
+        private readonly Random _random = new();
+        private int _betAmount = 0;
 
         public Game1(GameSelect gameSelect)
         {
             InitializeComponent();
-            StartNewGame();
             _gameSelect = gameSelect;
-
 
             this.Left = _gameSelect.Left;
             this.Top = _gameSelect.Top;
             this.WindowStartupLocation = WindowStartupLocation.Manual;
+
+            UpdateBalanceLabel();
+
+            HitButton.IsEnabled = false;
+            StandButton.IsEnabled = false;
+            NewGameButton.IsEnabled = false;
         }
-        private List<string> deck;
-        private List<string> playerHand;
-        private List<string> dealerHand;
-
-        private Random rng = new Random();
-
 
         private void StartNewGame()
         {
-            deck = GenerateDeck();
-            playerHand = new List<string>();
-            dealerHand = new List<string>();
+            _playerCards.Clear();
+            _dealerCards.Clear();
+            PlayerCardsPanel.Children.Clear();
+            DealerCardsPanel.Children.Clear();
 
-            playerHand.Add(DrawCard());
-            playerHand.Add(DrawCard());
+            DealCard(_playerCards, PlayerCardsPanel);
+            DealCard(_dealerCards, DealerCardsPanel);
+            DealCard(_playerCards, PlayerCardsPanel);
+            DealCard(_dealerCards, DealerCardsPanel);
 
-            dealerHand.Add(DrawCard());
-            dealerHand.Add(DrawCard());
+            UpdateScoreLabel(PlayerScoreLabel, _playerCards);
+            UpdateScoreLabel(DealerScoreLabel, _dealerCards);
 
-            UpdateUI();
+            HitButton.IsEnabled = true;
+            StandButton.IsEnabled = true;
+
+            BetTextBox.IsEnabled = false;
+            PlaceBetButton.IsEnabled = false;
+
+            NewGameButton.IsEnabled = false;
         }
 
-        private List<string> GenerateDeck()
+        private void DealCard(List<Card> hand, StackPanel panel)
         {
-            var suits = new[] { "A", "B", "C", "D" };
-            var ranks = new[] { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
-
-            return suits.SelectMany(suit => ranks.Select(rank => $"{rank}{suit}")).OrderBy(_ => rng.Next()).ToList();
+            Card card = _cardFactory.CreateRandomCard();
+            hand.Add(card);
+            panel.Children.Add(CreateCardImage(card));
         }
 
-        private string DrawCard()
+        private Image CreateCardImage(Card card)
         {
-            if (deck.Count == 0) deck = GenerateDeck();
-            var card = deck[0];
-            deck.RemoveAt(0);
-            return card;
-        }
-
-        private int CalculateScore(List<string> hand)
-        {
-            int score = 0;
-            int aces = 0;
-
-            foreach (var card in hand)
+            try
             {
-                string rank = card.Substring(0, card.Length - 1);
+                string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
+                string path = Path.Combine(projectRoot, "Cards", card.ImageName);
 
-                if (int.TryParse(rank, out int val))
-                {
-                    score += val;
-                }
-                else if (rank == "A")
-                {
-                    score += 11;
-                    aces++;
-                }
-                else
-                {
-                    score += 10;
-                }
+                if (!File.Exists(path))
+                    throw new FileNotFoundException($"A kép nem található: {path}");
+
+                BitmapImage image = new BitmapImage(new Uri(path, UriKind.Absolute));
+                return new Image { Source = image, Height = 100, Margin = new Thickness(5) };
             }
-
-            while (score > 21 && aces > 0)
+            catch (Exception ex)
             {
-                score -= 10;
-                aces--;
+                MessageBox.Show($"Nem sikerült betölteni a képet: {card.ImageName}\nHiba: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                return new Image { Height = 100, Margin = new Thickness(5) };
             }
-
-            return score;
         }
 
-        private void UpdateUI()
+        private void UpdateScoreLabel(Label label, List<Card> hand)
         {
-            PlayerCardsText.Text = string.Join(", ", playerHand);
-            DealerCardsText.Text = string.Join(", ", dealerHand);
-
-            int playerScore = CalculateScore(playerHand);
-            int dealerScore = CalculateScore(dealerHand);
-
-            PlayerScoreText.Text = $"Pontszám: {playerScore}";
-            DealerScoreText.Text = $"Pontszám: {dealerScore}";
-
-            if (playerScore > 21)
-            {
-                MessageBox.Show("Túlhúztál!");
-                DisableGame();
-            }
+            int score = hand.Sum(card => card.Value);
+            label.Content = $"Érték: {score}";
         }
 
         private void HitButton_Click(object sender, RoutedEventArgs e)
         {
-            playerHand.Add(DrawCard());
-            UpdateUI();
+            DealCard(_playerCards, PlayerCardsPanel);
+            UpdateScoreLabel(PlayerScoreLabel, _playerCards);
+
+            if (_playerCards.Sum(c => c.Value) > 21)
+            {
+                EndGame(false);
+            }
         }
 
         private void StandButton_Click(object sender, RoutedEventArgs e)
         {
-            int dealerScore = CalculateScore(dealerHand);
-            while (dealerScore < 17)
+            while (_dealerCards.Sum(c => c.Value) < 17)
             {
-                dealerHand.Add(DrawCard());
-                dealerScore = CalculateScore(dealerHand);
+                DealCard(_dealerCards, DealerCardsPanel);
             }
 
-            int playerScore = CalculateScore(playerHand);
-            UpdateUI();
+            int playerScore = _playerCards.Sum(c => c.Value);
+            int dealerScore = _dealerCards.Sum(c => c.Value);
+            UpdateScoreLabel(DealerScoreLabel, _dealerCards);
 
             if (dealerScore > 21 || playerScore > dealerScore)
-                MessageBox.Show("Nyertél!");
-            else if (playerScore == dealerScore)
-                MessageBox.Show("Döntetlen!");
+                EndGame(true);
+            else if (dealerScore == playerScore)
+                EndGame(null);
             else
-                MessageBox.Show("Vesztettél!");
-
-            DisableGame();
+                EndGame(false);
         }
 
         private void NewGameButton_Click(object sender, RoutedEventArgs e)
         {
-            EnableGame();
-            StartNewGame();
-        }
+            PlayerCardsPanel.Children.Clear();
+            DealerCardsPanel.Children.Clear();
+            PlayerScoreLabel.Content = "";
+            DealerScoreLabel.Content = "";
+            BetTextBox.IsEnabled = true;
+            PlaceBetButton.IsEnabled = true;
 
-        private void DisableGame()
-        {
             HitButton.IsEnabled = false;
             StandButton.IsEnabled = false;
+
+            
+            NewGameButton.IsEnabled = false;
+
+            _betAmount = 0; 
         }
 
-        private void EnableGame()
+        private void PlaceBetButton_Click(object sender, RoutedEventArgs e)
         {
-            HitButton.IsEnabled = true;
-            StandButton.IsEnabled = true;
+            if (int.TryParse(BetTextBox.Text, out int bet) && bet > 0 && bet <= UserSession.Balance)
+            {
+                _betAmount = bet;
+                UserSession.Balance -= bet;
+                UpdateBalanceLabel();
+                StartNewGame();
+            }
+            else
+            {
+                MessageBox.Show("Érvénytelen tét. Az összeg legyen pozitív szám, és ne haladja meg az egyenleged!");
+            }
+        }
+
+        private void EndGame(bool? playerWon)
+        {
+            if (playerWon == true)
+            {
+                MessageBox.Show("Nyertél!");
+                UserSession.Balance += _betAmount * 2;
+            }
+            else if (playerWon == null)
+            {
+                MessageBox.Show("Döntetlen!");
+                UserSession.Balance += _betAmount;
+            }
+            else
+            {
+                MessageBox.Show("Vesztettél!");
+            }
+
+            UpdateBalanceLabel();
+
+            HitButton.IsEnabled = false;
+            StandButton.IsEnabled = false;
+
+            NewGameButton.IsEnabled = true;
+            BetTextBox.IsEnabled = true;
+            PlaceBetButton.IsEnabled = true;
+
+            if (!DataBase.UpdateUserBalance(UserSession.Id, UserSession.Balance, out string error))
+            {
+                MessageBox.Show(error, "Mentési hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void UpdateBalanceLabel()
+        {
+            BalanceLabel.Content = $"Egyenleg: {UserSession.Balance} $";
+        }
+
+        private void MuteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MusicState.isMuted)
+            {
+                MusicState.mediaPlayer.Play();
+                MusicState.isMuted = false;
+                MuteButton.Content = "🔊";
+            }
+            else
+            {
+                MusicState.mediaPlayer.Pause();
+                MusicState.isMuted = true;
+                MuteButton.Content = "🔇";
+            }
+        }
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            MusicState.mediaPlayer.Stop();
+
+            string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
+            string menuMusicPath = System.IO.Path.Combine(projectRoot, "Sound", "menu.mp3");
+            MusicState.mediaPlayer.Open(new Uri(menuMusicPath, UriKind.Absolute));
+            MusicState.mediaPlayer.MediaEnded += (s, e2) => MusicState.mediaPlayer.Position = TimeSpan.Zero;
+            if (!MusicState.isMuted)
+                MusicState.mediaPlayer.Play();
+
+           
+            GameSelect gs = new GameSelect(_gameSelect._mainWindow); 
+            gs.Left = this.Left;
+            gs.Top = this.Top;
+            gs.Show();
+
+            this.Close();
+        }
+    }
+
+    public class Card
+    {
+        public string Suit { get; set; }
+        public string Rank { get; set; }
+        public int Value { get; set; }
+        public string ImageName => $"{Rank}_of_{Suit}.png";
+    }
+
+    public interface ICardFactory
+    {
+        Card CreateRandomCard();
+    }
+
+    public class CardFactory : ICardFactory
+    {
+        private readonly Random _random = new();
+        private readonly string[] suits = { "hearts", "diamonds", "clubs", "spades" };
+        private readonly string[] ranks = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king", "ace" };
+
+        public Card CreateRandomCard()
+        {
+            string suit = suits[_random.Next(suits.Length)];
+            string rank = ranks[_random.Next(ranks.Length)];
+            int value = rank switch
+            {
+                "jack" or "queen" or "king" => 10,
+                "ace" => 11,
+                _ => int.Parse(rank)
+            };
+            return new Card { Suit = suit, Rank = rank, Value = value };
         }
     }
 }

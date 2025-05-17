@@ -1,35 +1,58 @@
 ﻿<Window x:Class="Beadando1.Game1"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Beadando1"
-        mc:Ignorable="d"
-        Title="Black Jack" Height="450" Width="800" Background="#FF006400">
+        Title="Black Jack" Height="600" Width="1000" Background="#FF006400">
+    
     <Grid Margin="10">
+        
         <Grid.RowDefinitions>
+            
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Black Jack" FontSize="30" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
-        <Label x:Name="BalanceLabel" FontSize="16" Margin="5"/>
-        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10" VerticalAlignment="Top">
-            <TextBlock Text="Játékos lapjai:" FontWeight="Bold" Foreground="White"/>
-            <TextBlock x:Name="PlayerCardsText" Foreground="White"/>
-            <TextBlock x:Name="PlayerScoreText" Foreground="White" Margin="0,0,0,10"/>
-
-            <TextBlock Text="Osztó lapjai:" FontWeight="Bold" Foreground="White"/>
-            <TextBlock x:Name="DealerCardsText" Foreground="White"/>
-            <TextBlock x:Name="DealerScoreText" Foreground="White"/>
+        <Button Content="Vissza" HorizontalAlignment="Left" Click="BackButton_Click" Width="100" Margin="10"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,0,10">
+            <Label x:Name="BalanceLabel" Content="Egyenleg: 0" Foreground="White" FontWeight="Bold" FontSize="16" Margin="10"/>
+            <Button x:Name="MuteButton" Content="🔊" Click="MuteButton_Click" Width="40" Height="30" Margin="10"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button x:Name="HitButton" Content="Húzok" Click="HitButton_Click" Width="80" Margin="5"/>
-            <Button x:Name="StandButton" Content="Megállok" Click="StandButton_Click" Width="80" Margin="5"/>
-            <Button x:Name="NewGameButton" Content="Új játék" Click="NewGameButton_Click" Width="80" Margin="5"/>
+       
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+            <Label Content="Tét:" Foreground="White" VerticalAlignment="Center" FontWeight="Bold"/>
+            <TextBox x:Name="BetTextBox" Width="100" Margin="5"/>
+            <Button x:Name="PlaceBetButton" Content="Tét felrakása" Click="PlaceBetButton_Click" Margin="5"/>
+        </StackPanel>
+
+       
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+           
+            <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center">
+                <TextBlock Text="Játékos lapjai" FontWeight="Bold" FontSize="16" Foreground="White" Margin="0,0,0,10"/>
+                <StackPanel x:Name="PlayerCardsPanel" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                <Label x:Name="PlayerScoreLabel" Foreground="White" FontSize="14" HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            
+            <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
+                <TextBlock Text="Osztó lapjai" FontWeight="Bold" FontSize="16" Foreground="White" Margin="10"/>
+                <StackPanel x:Name="DealerCardsPanel" Orientation="Horizontal" HorizontalAlignment="Center"/>
+                <Label x:Name="DealerScoreLabel" Foreground="White" FontSize="14" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Gombok -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button x:Name="HitButton" Content="Húzok" Click="HitButton_Click" Width="100" Margin="5"/>
+            <Button x:Name="StandButton" Content="Megállok" Click="StandButton_Click" Width="100" Margin="5"/>
+            <Button x:Name="NewGameButton" Content="Új játék" Click="NewGameButton_Click" Width="100" Margin="5"/>
         </StackPanel>
     </Grid>
 </Window>
-

@@ -1,0 +1,49 @@
+﻿<Window x:Class="Beadando1.Game2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Beadando1"
+        mc:Ignorable="d"
+        Title="Game2" Height="450" Width="800">
+    <Grid Background="#222">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock x:Name="BalanceText"
+                       FontSize="24"
+                       Foreground="White"
+                       Text="Egyenleg: $"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20"/>
+            <StackPanel>
+            <TextBlock Text="Tét: " Foreground="White" VerticalAlignment="Center" FontSize="18"/>
+            <ComboBox x:Name="BetComboBox" Width="100" Margin="10,0" SelectedIndex="0">
+                <ComboBoxItem Content="5" />
+                <ComboBoxItem Content="10" />
+                <ComboBoxItem Content="20" />
+                <ComboBoxItem Content="50" />
+            </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <TextBlock x:Name="Slot1" FontSize="60" Text="❓" Margin="10"/>
+                <TextBlock x:Name="Slot2" FontSize="60" Text="❓" Margin="10"/>
+                <TextBlock x:Name="Slot3" FontSize="60" Text="❓" Margin="10"/>
+            </StackPanel>
+
+            <Button Content="Pörgetés 🎰"
+                    Click="Spin_Click"
+                    Width="150"
+                    Height="40"
+                    Background="Green"
+                    Foreground="White"
+                    Margin="0,20,0,10"/>
+
+            <TextBlock x:Name="MessageText"
+                       FontSize="18"
+                       Foreground="LightGreen"
+                       Text=""
+                       HorizontalAlignment="Center"
+                       Margin="0,10,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>

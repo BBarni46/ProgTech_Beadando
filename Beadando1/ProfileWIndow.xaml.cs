@@ -99,6 +99,9 @@ namespace Beadando1
                 updateCmd.Parameters.AddWithValue("@nev", username);
                 updateCmd.ExecuteNonQuery();
 
+                UserSession.Balance = (decimal)newBalance;
+
+
                 MessageBox.Show($"Új egyenleg: {newBalance} $", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
                 AmountTextBox.Clear();
                 LoadBalance();

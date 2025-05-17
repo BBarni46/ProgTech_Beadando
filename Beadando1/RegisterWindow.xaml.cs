@@ -33,11 +33,15 @@ namespace Beadando1
             string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
 
-            if (DataBase.LoginUser(username, password))
+            if (DataBase.LoginUser(username, password, out int id, out decimal balance))
             {
+                UserSession.Id = id;
+                UserSession.Username = username;
+                UserSession.Balance = balance;
+
                 StatusTextBlock.Text = "Sikeres bejelentkezés!";
                 mainWindow.SetLoggedInUser(username);
-                this.Close();
+                Close();
             }
             else
             {
@@ -61,7 +65,7 @@ namespace Beadando1
             else
                 StatusTextBlock.Text = error;
         }
-
+        
         private void ShowUsers_Click(object sender, RoutedEventArgs e)
         {
             var userListWindow = new UserListing();

@@ -1,8 +1,10 @@
 ﻿using Beadando1.BELÉPÉS;
 using Beadando1.FÉLKARÚ;
+using Beadando1.MUSIC;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,9 +31,12 @@ namespace Beadando1
         public Game2(GameSelect gameSelect)
         {
             InitializeComponent();
+            _gameSelect = gameSelect;
+
+            this.Left = _gameSelect.Left;
+            this.Top = _gameSelect.Top;
             slotMachineStrategy = new BasicSlotStrategy();
             UpdateBalanceText();
-            _gameSelect = gameSelect;
         }
         private void UpdateBalanceText()
         {
@@ -83,6 +88,32 @@ namespace Beadando1
             {
                 MessageBox.Show("Hiba az egyenleg mentésekor!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            MusicState.mediaPlayer.Stop();
+
+            string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
+            string menuMusicPath = System.IO.Path.Combine(projectRoot, "Sound", "menu.mp3");
+            MusicState.mediaPlayer.Open(new Uri(menuMusicPath, UriKind.Absolute));
+            MusicState.mediaPlayer.MediaEnded += (s, e2) => MusicState.mediaPlayer.Position = TimeSpan.Zero;
+            if (!MusicState.isMuted)
+                MusicState.mediaPlayer.Play();
+
+
+            GameSelect gs = new GameSelect(_gameSelect._mainWindow);
+            gs.Left = this.Left;
+            gs.Top = this.Top;
+            gs.Show();
+
+            this.Close();
+        }
+
+        private void MuteButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

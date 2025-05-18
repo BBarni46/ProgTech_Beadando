@@ -42,6 +42,7 @@ namespace Beadando1
                 UserSession.Balance = balance;
 
                 StatusTextBlock.Text = "Sikeres bejelentkezés!";
+                Logger.Log($"Felhasználó bejelentkezett: {UserSession.Username}");
                 mainWindow.SetLoggedInUser(username);
                 Close();
             }

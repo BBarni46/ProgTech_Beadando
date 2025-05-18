@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.IO;
 using MySql.Data.MySqlClient;
 
-namespace Beadando1
+namespace Beadando1.ADATB
 {
     public static class DataBase
     { //xd

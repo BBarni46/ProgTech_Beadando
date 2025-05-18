@@ -16,12 +16,12 @@
                        Margin="0,0,0,20"/>
             <StackPanel>
             <TextBlock Text="Tét: " Foreground="White" VerticalAlignment="Center" FontSize="18"/>
-            <ComboBox x:Name="BetComboBox" Width="100" Margin="10,0" SelectedIndex="0">
-                <ComboBoxItem Content="5" />
-                <ComboBoxItem Content="10" />
-                <ComboBoxItem Content="20" />
-                <ComboBoxItem Content="50" />
-            </ComboBox>
+                <ComboBox x:Name="BetComboBox" Width="100" SelectedIndex="0">
+                    <ComboBoxItem Content="5" />
+                    <ComboBoxItem Content="10" />
+                    <ComboBoxItem Content="20" />
+                    <ComboBoxItem Content="50" />
+                </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center">

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace Beadando1
+namespace Beadando1.MUSIC
 {
     public static class MusicState
     {

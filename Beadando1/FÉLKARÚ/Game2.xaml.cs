@@ -26,18 +26,13 @@ namespace Beadando1
         private ISlotMachineStrategy slotMachineStrategy;
         private readonly string connectionString = "Server=localhost;Database=users;Uid=root;Pwd=;";
 
-        public Game2()
+        public Game2(GameSelect gameSelect)
         {
             InitializeComponent();
             slotMachineStrategy = new BasicSlotStrategy();
             UpdateBalanceText();
-        }
-
-        public Game2(GameSelect gameSelect)
-        {
             _gameSelect = gameSelect;
         }
-
         private void UpdateBalanceText()
         {
             BalanceText.Text = $"Egyenleg: {UserSession.Balance} $";

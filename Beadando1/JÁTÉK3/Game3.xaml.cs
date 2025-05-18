@@ -25,9 +25,8 @@ namespace Beadando1
         {
             InitializeComponent();
 
-            _gameSelect = gameSelect;  // A GameSelect példány tárolása
-
-            // Pozíció öröklése a GameSelect ablakról
+            _gameSelect = gameSelect; 
+      
             this.Left = _gameSelect.Left;
             this.Top = _gameSelect.Top;
             this.WindowStartupLocation = WindowStartupLocation.Manual;

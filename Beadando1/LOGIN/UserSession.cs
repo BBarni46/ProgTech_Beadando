@@ -11,6 +11,7 @@ namespace Beadando1.BELÉPÉS
         public static int Id { get; set; }
         public static string Username { get; set; } = string.Empty;
         public static decimal Balance { get; set; }
+        public static int LastBetAmount { get; set; }
 
         public static bool IsLoggedIn => !string.IsNullOrEmpty(Username);
 

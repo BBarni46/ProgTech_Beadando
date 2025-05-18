@@ -8,7 +8,7 @@ namespace Beadando1.FÉLKARÚ
 {
         public class BasicSlotStrategy : ISlotMachineStrategy
         {
-            private static readonly string[] symbols = { "🍒", "💎", "🍋", "🔔", "7️⃣" };
+            private static readonly string[] symbols = { "🍒", "🍋", "🍉", "🔔", "⭐", "💎", "7️⃣", "🍇" };
             private readonly Random random = new();
 
             public SpinResult Spin()

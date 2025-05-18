@@ -44,7 +44,7 @@ namespace Beadando1
         }
 
         private void Spin_Click(object sender, RoutedEventArgs e)
-        {
+        { 
             const decimal costPerSpin = 5;
 
             if (UserSession.Balance < costPerSpin)
@@ -113,7 +113,18 @@ namespace Beadando1
 
         private void MuteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (MusicState.isMuted)
+            {
+                MusicState.mediaPlayer.Play();
+                MusicState.isMuted = false;
+                MuteButton.Content = "🔊";
+            }
+            else
+            {
+                MusicState.mediaPlayer.Pause();
+                MusicState.isMuted = true;
+                MuteButton.Content = "🔇";
+            }
         }
     }
 }

@@ -7,6 +7,33 @@
         mc:Ignorable="d"
         Title="Game2" Height="450" Width="800">
     <Grid Background="#222">
+
+        <Grid.Resources>
+            <Style x:Key="RoundedButtonStyle" TargetType="Button">
+                <Setter Property="Height" Value="10"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
+
+        <Button x:Name="BackButton" Content="Vissza" HorizontalAlignment="Left" VerticalAlignment="Top"  Style="{StaticResource RoundedButtonStyle}" Width="100" Height="30" Margin="10,16,0,0" Click="BackButton_Click"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,0,10">
+            <Button x:Name="MuteButton" Content="🔊" Click="MuteButton_Click"  Style="{StaticResource RoundedButtonStyle}" Width="40" Height="30" Margin="10,0,10,360"/>
+        </StackPanel>
+        
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock x:Name="BalanceText"
                        FontSize="24"
@@ -14,15 +41,6 @@
                        Text="Egyenleg: $"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,20"/>
-            <StackPanel>
-            <TextBlock Text="Tét: " Foreground="White" VerticalAlignment="Center" FontSize="18"/>
-                <ComboBox x:Name="BetComboBox" Width="100" SelectedIndex="0">
-                    <ComboBoxItem Content="5" />
-                    <ComboBoxItem Content="10" />
-                    <ComboBoxItem Content="20" />
-                    <ComboBoxItem Content="50" />
-                </ComboBox>
-            </StackPanel>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center">
                 <TextBlock x:Name="Slot1" FontSize="60" Text="❓" Margin="10"/>
@@ -34,8 +52,9 @@
                     Click="Spin_Click"
                     Width="150"
                     Height="40"
+                    Style="{StaticResource RoundedButtonStyle}"
                     Background="Green"
-                    Foreground="White"
+                    Foreground="Black"
                     Margin="0,20,0,10"/>
 
             <TextBlock x:Name="MessageText"
@@ -44,6 +63,7 @@
                        Text=""
                        HorizontalAlignment="Center"
                        Margin="0,10,0,0"/>
+            
         </StackPanel>
     </Grid>
 </Window>

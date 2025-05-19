@@ -2,6 +2,7 @@
 using Beadando1.FÉLKARÚ;
 using Beadando1.MUSIC;
 using MySql.Data.MySqlClient;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -59,6 +60,7 @@ namespace Beadando1
             if (UserSession.Balance < costPerSpin)
             {
                 MessageBox.Show("Nincs elég egyenleged a pörgetéshez!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Log.Warning($"Felhasználónak nincs elég elérhető egyenlege a pörgetéshez.");
                 return;
             }
 
@@ -96,6 +98,7 @@ namespace Beadando1
             catch
             {
                 MessageBox.Show("Hiba az egyenleg mentésekor!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                Log.Warning($"Felhasználónak nem sikerült menteni.");
             }
 
         }

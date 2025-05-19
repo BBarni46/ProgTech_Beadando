@@ -1,6 +1,7 @@
 ﻿using Beadando1.ADATB;
 using Beadando1.BELÉPÉS;
 using Beadando1.MUSIC;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -161,6 +162,7 @@ namespace Beadando1
             else
             {
                 MessageBox.Show("Érvénytelen tét. Az összeg legyen pozitív szám, és ne haladja meg az egyenleged!");
+                Log.Warning($"Felhasználü érvénytelen tétet adott meg.");
             }
         }
 
@@ -170,15 +172,18 @@ namespace Beadando1
             {
                 MessageBox.Show("Nyertél!");
                 UserSession.Balance += _betAmount * 2;
+                Log.Information($"Felhasználó nyert.");
             }
             else if (playerWon == null)
             {
                 MessageBox.Show("Döntetlen!");
                 UserSession.Balance += _betAmount;
+                Log.Information($"Döntetlen eredmény született.");
             }
             else
             {
                 MessageBox.Show("Vesztettél!");
+                Log.Information($"Felhasználó vesztett.");
             }
 
             UpdateBalanceLabel();

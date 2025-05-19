@@ -10,11 +10,13 @@
   </PropertyGroup>
 	<ItemGroup>
 		<None Remove="Image\bg.jpeg" />
+		<None Remove="Image\roulette.jpg"/>
 	</ItemGroup>
 
 	<ItemGroup>
 		<Content Include="Image\favicon.ico" />
 		<Resource Include="Image\bg.jpeg" />
+		<Resource Include="Image\roulette.jpg"/>
 	</ItemGroup>
 
 	<ItemGroup>

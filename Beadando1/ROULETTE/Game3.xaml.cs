@@ -5,6 +5,7 @@ using Beadando1.Roulette.Strategy;
 using Beadando1.Roulette;
 using System;
 using System.Windows;
+using Serilog;
 
 namespace Beadando1
 {
@@ -49,6 +50,7 @@ namespace Beadando1
                 || _betAmount > UserSession.Balance)
             {
                 MessageBox.Show("Érvénytelen tét.");
+                Log.Warning($"Felhasználó érvénytelen tétet adott meg.");
                 return;
             }
 
@@ -122,7 +124,7 @@ namespace Beadando1
 
             // 7) Egyenleg frissítése és mentés
             UpdateBalanceLabel();
-
+            Log.Warning($"Sikeres egyenleg frissítés");
             if (!DataBase.UpdateUserBalance(
                     UserSession.Id,
                     UserSession.Balance,
@@ -132,6 +134,7 @@ namespace Beadando1
                     "Mentési hiba",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
+                Log.Warning($"Nem sikerült menteni.");
             }
         }
 

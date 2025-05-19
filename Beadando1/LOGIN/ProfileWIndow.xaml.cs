@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Serilog;
 
 namespace Beadando1
 {
@@ -29,6 +30,7 @@ namespace Beadando1
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.username = username;
             UsernameText.Text = $"Bejelentkezve: {username}";
+            Logger.Log($"Sikeres bejelentkezés: {username} felhasználó!");
             LoadBalance();
         }
         private void LoadBalance()
@@ -50,11 +52,13 @@ namespace Beadando1
                 else
                 {
                     BalanceText.Text = "Hiba: Nincs ilyen felhasználó.";
+                    Log.Warning($"Nem létező felhasználó");
                 }
             }
             catch
             {
                 BalanceText.Text = "Hiba az egyenleg lekérésekor.";
+                Log.Warning($"Hibás egyenleg");
             }
         }
 
@@ -73,6 +77,7 @@ namespace Beadando1
             if (!double.TryParse(AmountTextBox.Text.Trim(), out double amount) || amount <= 0)
             {
                 MessageBox.Show("Adj meg érvényes összeget!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Log.Warning($"Nem adott meg a felhasználó érvényes összeget");
                 return;
             }
 
@@ -93,6 +98,7 @@ namespace Beadando1
                 if (newBalance < 0)
                 {
                     MessageBox.Show("Nincs elég egyenleg!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Log.Warning($"Felhasználónak nincs elég egyenlege");
                     return;
                 }
 
@@ -105,12 +111,14 @@ namespace Beadando1
 
 
                 MessageBox.Show($"Új egyenleg: {newBalance} $", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
+                Log.Information($"Sikeres feltöltés");
                 AmountTextBox.Clear();
                 LoadBalance();
             }
             catch
             {
                 MessageBox.Show("Adatbázis hiba!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                Log.Warning($"Adatbázis hiba!");
             }
         }
 

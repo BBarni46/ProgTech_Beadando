@@ -1,5 +1,6 @@
 ﻿using Beadando1.BELÉPÉS;
 using Beadando1.MUSIC;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -53,13 +54,15 @@ namespace Beadando1
             {
                 MusicState.mediaPlayer.Play();
                 MusicState.isMuted = false;
-                ToggleMuteButton.Content = "🔊";  
+                ToggleMuteButton.Content = "🔊";
+                Log.Information($"Felhasználó lenémította a hangot!");
             }
             else
             {
                 MusicState.mediaPlayer.Pause();
                 MusicState.isMuted = true;
-                ToggleMuteButton.Content = "🔇";  
+                ToggleMuteButton.Content = "🔇";
+                Log.Information($"Felhasználó feloldotta a némítást!");
             }
         }
 
@@ -79,6 +82,7 @@ namespace Beadando1
 
             Game1 win1 = new Game1(this);
             win1.Show();
+            Log.Information($"Felhasználó megnyitotta a black jacket, és nem tudta hogy mennyit fog bukni");
             this.Close();
 
         }
@@ -87,6 +91,7 @@ namespace Beadando1
         {
             Game2 win2 = new Game2(this);
             win2.Show();
+            Log.Information($"Felhasználü megnyitotta a félkarú rablót! Kár volt.");
             this.Close();
         }
 
@@ -94,6 +99,7 @@ namespace Beadando1
         {
             Game3 win3 = new Game3(this);
             win3.Show();
+            Log.Information($"Felhasználó rossz döntést hozott, roulettezni kezd.");
             this.Close();
         }
 
@@ -104,12 +110,14 @@ namespace Beadando1
                 Left = this.Left,
                 Top = this.Top,
                 WindowStartupLocation = WindowStartupLocation.Manual
+
             };
 
             if (UserSession.IsLoggedIn)
                 main.SetLoggedInUser(UserSession.Username);
 
             main.Show();
+            Log.Information($"Felhasználó visszalépett.");
             this.Close();
         }
         private void AuthButton_Click(object sender, RoutedEventArgs e)

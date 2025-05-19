@@ -9,11 +9,9 @@ namespace Beadando1.Roulette
     {
         private readonly Random _random = new();
 
-        /// <summary>
         /// Lefuttat egy kört, és visszaadja a landolt számot, valamint a nyereményt.
-        /// </summary>
-        /// <param name="strategy">A választott fogadási stratégia.</param>
-        /// <param name="betAmount">A fogadott összeg.</param>
+        /// A választott fogadási stratégia.
+        /// A fogadott összeg.
         public RouletteResult PlayRound(IRouletteBetStrategy strategy, int betAmount)
         {
             int rolled = _random.Next(0, 37);

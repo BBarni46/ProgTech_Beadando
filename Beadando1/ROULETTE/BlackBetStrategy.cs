@@ -2,9 +2,7 @@
 
 namespace Beadando1.Roulette.Strategy
 {
-    /// <summary>
     /// Fekete mezőkre (1–36 közül a fekete számokra) fogadás – páros kifizetés.
-    /// </summary>
     public class BlackBetStrategy : IRouletteBetStrategy
     {
         public bool Evaluate(RouletteNumber landed) =>

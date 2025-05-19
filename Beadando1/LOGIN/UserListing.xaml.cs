@@ -25,6 +25,7 @@ namespace Beadando1
         public UserListing()
         {
             InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             LoadUsers();
         }
 

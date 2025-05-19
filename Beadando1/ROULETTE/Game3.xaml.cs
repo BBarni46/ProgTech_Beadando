@@ -18,12 +18,20 @@ namespace Beadando1
         {
             InitializeComponent();
 
+            if (MusicState.isMuted)
+            {
+                MuteButton.Content = "🔇";
+                MusicState.mediaPlayer.Pause();
+            }
+            else
+            {
+                MuteButton.Content = "🔊";
+                MusicState.mediaPlayer.Play();
+            }
+
             _gameSelect = gameSelect;
             _engine = new RouletteEngine();
-
-            this.Left = _gameSelect.Left;
-            this.Top = _gameSelect.Top;
-            this.WindowStartupLocation = WindowStartupLocation.Manual;
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             UpdateBalanceLabel();
         }

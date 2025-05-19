@@ -5,7 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Beadando1"
         mc:Ignorable="d"
-              Title="RegisterWindow" Height="200" Width="500">
+        Title="Regisztráció" Height="250" Width="400"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#CFE8FC" Offset="0.0"/>
+            <GradientStop Color="#F2F2F2" Offset="1.0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -14,19 +23,24 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBox x:Name="UsernameTextBox"  Margin="100,5,0,5"/>
-        <PasswordBox x:Name="PasswordBox" Grid.Row="1" Margin="100,5,0,5"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Label Content="Felhasználónév:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,5"/>
+        <TextBox x:Name="UsernameTextBox" Grid.Row="0" Grid.Column="1" Margin="5" Width="200"/>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,10" HorizontalAlignment="Center">
-            <Button Content="Bejelentkezés" Click="Login_Click"/>
-            <Button Content="Regisztráció" Click="Register_Click" Margin="5"/>
-            <Button Content="Felhasználók megtekintése" Click="ShowUsers_Click" Margin="5"/>
+        <Label Content="Jelszó:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,5"/>
+        <PasswordBox x:Name="PasswordBox" Grid.Row="1" Grid.Column="1" Margin="5" Width="200"/>
 
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,15,0,5">
+            <Button Content="Bejelentkezés" Width="100" Margin="5" Click="Login_Click"/>
+            <Button Content="Regisztráció" Width="100" Margin="5" Click="Register_Click"/>
+            <Button Content="Felhasználók" Width="120" Margin="5" Click="ShowUsers_Click"/>
         </StackPanel>
 
-        <TextBlock x:Name="StatusTextBlock" Grid.Row="3" Foreground="Red" TextAlignment="Center"/>
-        <Label Content="Felhasználónév" HorizontalAlignment="Left" Margin="0,2,0,0" VerticalAlignment="Top" Grid.RowSpan="2"/>
-        <Label Content="Jelszó" HorizontalAlignment="Left" Margin="45,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
-
+        <TextBlock x:Name="StatusTextBlock" Grid.Row="3" Grid.ColumnSpan="2"
+                   Foreground="Red" TextAlignment="Center" Margin="0,10,0,0"/>
     </Grid>
 </Window>

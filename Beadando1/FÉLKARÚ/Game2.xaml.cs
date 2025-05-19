@@ -24,7 +24,7 @@ namespace Beadando1
     /// </summary>
     public partial class Game2 : Window
     {
-        private GameSelect _gameSelect;  // Itt van a mező, osztály szinten kell 
+        private GameSelect _gameSelect;  
         private ISlotMachineStrategy slotMachineStrategy;
         private readonly string connectionString = "Server=localhost;Database=users;Uid=root;Pwd=;";
 
@@ -32,11 +32,20 @@ namespace Beadando1
         {
             InitializeComponent();
             _gameSelect = gameSelect;
-
-            this.Left = _gameSelect.Left;
-            this.Top = _gameSelect.Top;
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             slotMachineStrategy = new BasicSlotStrategy();
             UpdateBalanceText();
+            
+            if (MusicState.isMuted)
+            {
+                MuteButton.Content = "🔇";
+                MusicState.mediaPlayer.Pause();
+            }
+            else
+            {
+                MuteButton.Content = "🔊";
+                MusicState.mediaPlayer.Play();
+            }
         }
         private void UpdateBalanceText()
         {

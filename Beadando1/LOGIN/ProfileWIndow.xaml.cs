@@ -26,6 +26,7 @@ namespace Beadando1
         public ProfileWindow(string username) 
         {
             InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.username = username;
             UsernameText.Text = $"Bejelentkezve: {username}";
             LoadBalance();

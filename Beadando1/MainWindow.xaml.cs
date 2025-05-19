@@ -23,12 +23,25 @@ namespace Beadando1
         {
 
             InitializeComponent();
+
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
             string fullPath = System.IO.Path.Combine(projectRoot, "Sound", "menu.mp3");
 
             MusicState.mediaPlayer.Open(new Uri(fullPath, UriKind.Absolute));
             MusicState.mediaPlayer.MediaEnded += (s, e) => MusicState.mediaPlayer.Position = TimeSpan.Zero;
             MusicState.mediaPlayer.Play();
+
+            if (MusicState.isMuted)
+            {
+                ToggleMuteButton.Content = "🔇";
+                MusicState.mediaPlayer.Pause();
+            }
+            else
+            {
+                ToggleMuteButton.Content = "🔊";
+                MusicState.mediaPlayer.Play();
+            }
         }
 
         private void Play_Click(object sender, RoutedEventArgs e)
@@ -44,9 +57,6 @@ namespace Beadando1
                 }   
             }
             GameSelect win = new GameSelect(this);
-            win.Left = this.Left;
-            win.Top = this.Top;
-            win.WindowStartupLocation = WindowStartupLocation.Manual;
             win.Show();
             this.Close();
         }

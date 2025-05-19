@@ -15,6 +15,7 @@ using Beadando1.ADATB;
 using Beadando1.BELÉPÉS;
 using Microsoft.Data.Sqlite;
 using MySql.Data.MySqlClient;
+using Serilog;
 namespace Beadando1
 {
     /// <summary>
@@ -23,11 +24,10 @@ namespace Beadando1
     public partial class RegisterWindow : Window
     {
         private MainWindow mainWindow;
-
-        
         public RegisterWindow(MainWindow mainWindow)
         {
             InitializeComponent();
+            Log.Information("Regiszter ablak megnyílt megfelelően");
             this.mainWindow = mainWindow;
         }
         private void Login_Click(object sender, RoutedEventArgs e)
@@ -59,14 +59,32 @@ namespace Beadando1
 
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
+                Log.Warning("Hiányzó mezők a regisztrációnál");
                 StatusTextBlock.Text = "Kérlek töltsd ki az összes mezőt.";
                 return;
             }
 
+            bool containsNumber = password.Any(char.IsDigit);
+            bool containsSpecial = password.Any(ch => !char.IsLetterOrDigit(ch));
+
+            if (!containsNumber || !containsSpecial)
+            {
+                Log.Warning("Hibás jelszó megadás");
+                StatusTextBlock.Text = "A jelszónak tartalmaznia kell legalább egy számot és egy speciális karaktert!";
+                return;
+            }
+            Log.Debug("Regisztráció próba: {Username}", username);
+
             if (DataBase.RegisterUser(username, password, out string error))
+            {
+                Log.Information("Sikeres regisztráció: {Username}", username);
                 StatusTextBlock.Text = "Regisztráció sikeres.";
+            }
             else
+            {
+                Log.Error("Regisztráció sikertelen: {Error}", error);
                 StatusTextBlock.Text = error;
+            }
         }
         
         private void ShowUsers_Click(object sender, RoutedEventArgs e)

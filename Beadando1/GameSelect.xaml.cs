@@ -33,7 +33,7 @@ namespace Beadando1
 
             this.Left = _mainWindow.Left;
             this.Top = _mainWindow.Top;
-            this.WindowStartupLocation = WindowStartupLocation.Manual;
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
            
             if (MusicState.isMuted)
@@ -97,12 +97,6 @@ namespace Beadando1
             this.Close();
         }
 
-        private void G4_Click(object sender, RoutedEventArgs e)
-        {
-            Game4 win4 = new Game4(this);
-            win4.Show();
-            this.Close();
-        }
         private void BackToMainMenu_Click(object sender, RoutedEventArgs e)
         {
             var main = new MainWindow

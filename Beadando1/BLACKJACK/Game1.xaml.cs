@@ -24,10 +24,18 @@ namespace Beadando1
         {
             InitializeComponent();
             _gameSelect = gameSelect;
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            this.Left = _gameSelect.Left;
-            this.Top = _gameSelect.Top;
-            this.WindowStartupLocation = WindowStartupLocation.Manual;
+            if (MusicState.isMuted)
+            {
+                MuteButton.Content = "🔇";
+                MusicState.mediaPlayer.Pause();
+            }
+            else
+            {
+                MuteButton.Content = "🔊";
+                MusicState.mediaPlayer.Play();
+            }
 
             UpdateBalanceLabel();
 

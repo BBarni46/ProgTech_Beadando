@@ -14,7 +14,7 @@ public static class Logger
         }
         catch
         {
-            // Hiba logolás közben (opcionális: ide is lehet másodlagos logot írni)
+            //ha hiba lenne a loggal
         }
     }
 }

@@ -11,11 +11,11 @@ namespace Beadando1.ADATB
 {
     public static class DataBase
     { //xd
-      // Állítsd be saját MySQL adataidnak megfelelően
+      
         private const string Server = "localhost";
         private const string DatabaseName = "users";
         private const string User = "root";
-        private const string Password = ""; // vagy amit megadtál
+        private const string Password = ""; 
         private static readonly string ConnectionString = $"Server={Server};Database={DatabaseName};Uid={User};Pwd={Password};";
 
         public static bool RegisterUser(string username, string password, out string errorMessage)
@@ -35,7 +35,7 @@ namespace Beadando1.ADATB
             }
             catch (MySqlException ex)
             {
-                if (ex.Number == 1062) // UNIQUE constraint violation
+                if (ex.Number == 1062) 
                     errorMessage = "Ez a felhasználónév már létezik.";
                 else
                     errorMessage = $"Hiba történt: {ex.Message}";

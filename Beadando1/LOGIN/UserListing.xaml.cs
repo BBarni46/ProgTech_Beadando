@@ -36,7 +36,7 @@ namespace Beadando1
             using var connection = new MySqlConnection(connectionString);
             connection.Open();
 
-            // A táblanév és oszlopnevek a te struktúrád szerint
+          
             var command = new MySqlCommand("SELECT név, egyenleg FROM felhasználók;", connection);
             using var reader = command.ExecuteReader();
 
@@ -50,10 +50,9 @@ namespace Beadando1
             }
         }
 
-        // Vissza gomb
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            this.Close(); // bezárja az aktuális ablakot
+            this.Close(); 
         }
     }
 }

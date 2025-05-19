@@ -31,11 +31,11 @@ namespace Beadando1.FÉLKARÚ
             {
                 if (symbols[0] == symbols[1] && symbols[1] == symbols[2])
                 {
-                    return 50; // három egyforma
+                    return 50; // hármas kapás
                 }
                 else if (symbols[0] == symbols[1] || symbols[1] == symbols[2] || symbols[0] == symbols[2])
                 {
-                    return 10; // kettő egyezés
+                    return 10; // kettes kapás
                 }
 
                 return 0;
